@@ -1,4 +1,5 @@
 package com.flp.ems.view;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class UserInteraction {
 	//creation of hashmap for storing details
 	Map<String, Object> empDetails=new HashMap<String, Object>();
 	Validate val=new Validate();
+	int ch;
 	Scanner sc=new Scanner(System.in);
 	//creating "has a" relation between the layers 
 	IEmployeeService empService;
@@ -147,14 +149,9 @@ public class UserInteraction {
 		}
 	  	
 	 
-		
-        System.out.println("enter Department Id");
-		empDetails.put("deptId", Integer.parseInt(sc.nextLine()));
-		
-		System.out.println("Select Department: ");
-		
 		System.out.println("1.Financial 2.Non-Financial 3.support 4.Include new Department");
-		int ch=Integer.parseInt( sc.nextLine());
+        System.out.println("enter Department Id");
+		empDetails.put("deptId",ch=Integer.parseInt( sc.nextLine()));
 		switch(ch)
 		{
 		case 1:empDetails.put("deptName","Financial" );
@@ -167,12 +164,11 @@ public class UserInteraction {
 		       break;
 				
 		}		
-		System.out.println("enter Project Id");
-		empDetails.put("projId", Integer.parseInt(sc.nextLine()));
-	System.out.println("Select Project:  ");
+		
 		
 		System.out.println("1.HSBC 2.AMAZON 3.MORGAN STANDLY");
-		 ch=Integer.parseInt( sc.nextLine());
+		System.out.println("enter Project Id");
+		empDetails.put("projId",  ch=Integer.parseInt( sc.nextLine()));
 		switch(ch)
 		{
 		case 1:empDetails.put("projName","HSBC " );
@@ -188,11 +184,9 @@ public class UserInteraction {
 		empDetails.put("projName", sc.nextLine());
 */
 		
-		System.out.println("enter Role Id");
-		empDetails.put("roleId",Integer.parseInt(sc.nextLine()));
-		System.out.println("Select Role");
 		System.out.println("1.Manager 2.Sr.Consultant 3.Consultant");
-		 ch=Integer.parseInt( sc.nextLine());
+		System.out.println("enter Role Id");
+		empDetails.put("roleId", ch=Integer.parseInt( sc.nextLine()));
 		switch(ch)
 		{
 		case 1:empDetails.put("roleName","Manager" );
@@ -246,7 +240,7 @@ public class UserInteraction {
 		
 	}
 	
-    public Employee searchEmployee()
+    public Employee searchEmployee() throws ClassNotFoundException, SQLException
 	{
 	String kinid;
 	String empName,mail;
@@ -306,7 +300,7 @@ public class UserInteraction {
 		empService.getAllEmployee();
 	}
 	
-    public Employee modifyEmployee()
+    public Employee modifyEmployee() throws ClassNotFoundException, SQLException
 	{   
     	Employee emp=null;
     	String Kinid,empName,mail; 	
@@ -359,33 +353,33 @@ public class UserInteraction {
 						case 1:
 							System.out.println("Enter The name: ");
 							empModifiedDetails.put("empName", sc.nextLine());
-							empService.modifyEmployee(empModifiedDetails,emp,ch);
-							break;
+							return empService.modifyEmployee(empModifiedDetails,emp,ch);
+							
 						case 2:
 							System.out.println("Enter The email: ");
 							empModifiedDetails.put("mail", sc.nextLine());
-							empService.modifyEmployee(empModifiedDetails,emp,ch);
-							break;
+							return empService.modifyEmployee(empModifiedDetails,emp,ch);
+							
 						case 3:
 							System.out.println("Enter The phone: ");
 							empModifiedDetails.put("phoneNo", sc.nextLine());
-							empService.modifyEmployee(empModifiedDetails,emp,ch);
-							break;	
+							return empService.modifyEmployee(empModifiedDetails,emp,ch);
+								
 						case 4:
 							System.out.println("Enter The Address: ");
 							empModifiedDetails.put("address", sc.nextLine());
-							empService.modifyEmployee(empModifiedDetails,emp,ch);
-							break;
+							return empService.modifyEmployee(empModifiedDetails,emp,ch);
+							
 						case 5:
 							System.out.println("Enter The Dob: ");
 							empModifiedDetails.put("dob", sc.nextLine());
-							empService.modifyEmployee(empModifiedDetails,emp,ch);
-							break;
+							return empService.modifyEmployee(empModifiedDetails,emp,ch);
+							
 						case 6:
 							System.out.println("Enter The Doj: ");
 							empModifiedDetails.put("dojs", sc.nextLine());
-							empService.modifyEmployee(empModifiedDetails,emp,ch);
-							break;	
+							return empService.modifyEmployee(empModifiedDetails,emp,ch);
+							
 					   		
 					}
 			}

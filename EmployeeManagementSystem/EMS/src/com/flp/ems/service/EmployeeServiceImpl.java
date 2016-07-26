@@ -39,23 +39,23 @@ public  class EmployeeServiceImpl implements IEmployeeService {
 		employee.setAddress((String)empDetails.get("address"));
 		employee.setDob((String)empDetails.get("dob"));
 		employee.setDoj((String)empDetails.get("doj"));
-		employee.setDeptid((Integer) empDetails.get("deptId"));
+		/*employee.setDeptid((Integer) empDetails.get("deptId"));
 		employee.setProjId((Integer) empDetails.get("projId"));
-		employee.setRoleId((Integer) empDetails.get("roleId"));
+		employee.setRoleId((Integer) empDetails.get("roleId"));*/
 
-		/*department.setDeptid((Integer) empDetails.get("deptId"));
-		department.setDeptName((String) empDetails.get("deptName"));*/
+		department.setDeptid((Integer) empDetails.get("deptId"));
+		department.setDeptName((String) empDetails.get("deptName"));
 
 		//employee.setDepartment(department);
 
-		/*project.setProjId((Integer) empDetails.get("projId"));
+		project.setProjId((Integer) empDetails.get("projId"));
 		project.setProjName((String) empDetails.get("projName"));
-		project.setDepartment(department);*/
+		//project.setDepartment(department);
 
 		//employee.setProject(project);
 
-		/*role.setRoleId((Integer) empDetails.get("roleId"));
-		role.setRoleName((String) empDetails.get("roleName"));*/
+		role.setRoleId((Integer) empDetails.get("roleId"));
+		role.setRoleName((String) empDetails.get("roleName"));
 
 		//employee.setRole(role);
 		//empDao.addEmployee(employee);
@@ -91,9 +91,9 @@ public  class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	
-	public Employee searchEmployee(String kinid,String empName,String mail){
+	public Employee searchEmployee(String kinid,String empName,String mail) throws ClassNotFoundException, SQLException{
 		
-		return empDao.searchEmployee(kinid,empName,mail);
+		 return empDao.searchEmployee(kinid,empName,mail);
 	}
 
 	public void getAllEmployee(){
@@ -107,8 +107,8 @@ public  class EmployeeServiceImpl implements IEmployeeService {
 	
 	
 	
-	public void modifyEmployee(Map empModifiedDetails,Employee emp,int ch) {
-		empDao.modifyEmployee(empModifiedDetails,emp,ch);
+	public Employee modifyEmployee(Map empModifiedDetails,Employee emp,int ch) throws ClassNotFoundException, SQLException {
+		return empDao.modifyEmployee(empModifiedDetails,emp,ch);
 		
 	}
 

@@ -1,8 +1,12 @@
 package com.flp.ems.view;
 
+import java.sql.SQLException;
 import java.util.*;
 
+import com.flp.ems.domain.Department;
 import com.flp.ems.domain.Employee;
+import com.flp.ems.domain.Project;
+import com.flp.ems.domain.Role;
 
 public class BootClass {
 
@@ -22,17 +26,49 @@ public class BootClass {
 		}
 		public static void menuSelection(int ch){
 			
-			Employee emp;
+			Employee emp = new Employee();
+			Department d=new Department();
+			 Project p=new Project();
+			 Role r=new Role();
+
 			List<Employee> emps;
 			
 			switch(ch){
 				case 1: ui.addEmployee();
 						break;
-			    case 2: ui.modifyEmployee();
-				        break;
+			    case 2:          
+				try {
+					emp=ui.modifyEmployee();
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+					        if(emp != null)
+					        {
+					       	System.out.println("Employee Modified "+emp);
+					        System.out.println(d.getDeptName());
+					        System.out.println(d.getDeptid());
+					        System.out.println(p.getProjId());
+					        System.out.println(p.getProjName());
+					        System.out.println(r.getRoleId());
+					        System.out.println(r.getRoleName());
+			                 }
+					         
+					        else
+						    System.out.println("Employee Not Found");
+					        break;
+			    	        
+							      
+				      
 				case 3:ui.removeEmployee();
           				break;
-				case 4:emp=ui.searchEmployee();
+				case 4:try {
+					emp=ui.searchEmployee();
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				        if(emp != null)
 				       	System.out.println("Employee Found "+emp);
 				        else

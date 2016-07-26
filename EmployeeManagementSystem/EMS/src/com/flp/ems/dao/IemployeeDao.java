@@ -15,9 +15,9 @@ public interface IemployeeDao {
     public void addEmployee(Employee employee)throws ClassNotFoundException, SQLException;
     public void getAllEmployee()throws ClassNotFoundException,SQLException;
   
-	public Employee searchEmployee(String kinid, String empName, String mail);
+	public Employee searchEmployee(String kinid, String empName, String mail) throws ClassNotFoundException, SQLException;
 
-	public void modifyEmployee(Map empModifiedDetails, Employee emp, int ch);
+	public Employee modifyEmployee(Map empModifiedDetails, Employee emp, int ch) throws SQLException, ClassNotFoundException;
 	public boolean removeEmployee(String kinid, String empName, String mail);
 	//public void getAllEmployee();
 	  //public HashSet<Employee>getAllEmpy();

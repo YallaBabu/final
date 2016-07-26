@@ -23,10 +23,6 @@ public class Project {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-	@Override
-	public String toString() {
-		return "Project \n projId=" + projId + "\n projName=" + projName + " ";
-	}
 	
 	
 }

@@ -10,9 +10,9 @@ private String phoneNo;
 private String address;
 private String dob;
 private String doj;
-private int deptid;
-private int projId;
-private int roleId;
+private Department department;
+private Project project;
+private Role role;
 public String getKinid() {
 	return kinid;
 }
@@ -61,24 +61,7 @@ public String getDoj() {
 public void setDoj(String doj) {
 	this.doj = doj;
 }
-public int getDeptid() {
-	return deptid;
-}
-public void setDeptid(int deptid) {
-	this.deptid = deptid;
-}
-public int getProjId() {
-	return projId;
-}
-public void setProjId(int projId) {
-	this.projId = projId;
-}
-public int getRoleId() {
-	return roleId;
-}
-public void setRoleId(int roleId) {
-	this.roleId = roleId;
-}
+
 
 
 }

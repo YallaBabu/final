@@ -1,5 +1,6 @@
 package com.flp.ems.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +9,8 @@ import com.flp.ems.domain.Employee;
 public interface IEmployeeService {
 	public void addEmployee(Map empDetails);
 	public void getAllEmployee();
-	public Employee searchEmployee(String kinid, String empName, String mail);
-	public void modifyEmployee(Map<String, Object> empModifiedDetails,Employee emp, int ch);
+	public Employee searchEmployee(String kinid, String empName, String mail) throws ClassNotFoundException, SQLException;
+	public Employee modifyEmployee(Map<String, Object> empModifiedDetails,Employee emp, int ch) throws ClassNotFoundException, SQLException;
 	public boolean removeEmployee(String kinid, String empName, String mail);
 }
 

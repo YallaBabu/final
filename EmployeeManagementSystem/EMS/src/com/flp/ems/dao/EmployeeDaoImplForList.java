@@ -18,7 +18,8 @@ public  class EmployeeDaoImplForList {
 	
 	HashSet<Employee> empy=new HashSet<Employee>();
 
-	public void addEmployee(Employee emp){
+	public void addEmployee(Employee emp)
+	{
 		//if(!employees.contains(emp))//for checking duplicate
        employees.add(emp);
 	   /*departments.add(emp.getDepartment());
@@ -28,7 +29,7 @@ public  class EmployeeDaoImplForList {
       //empy.add(emp);
 	  // System.out.println(empy);
 	   System.out.println(emp);
-	    }
+    }
 	
 	
 	

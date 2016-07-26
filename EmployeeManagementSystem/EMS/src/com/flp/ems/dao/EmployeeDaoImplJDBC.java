@@ -21,7 +21,11 @@ public class EmployeeDaoImplJDBC implements IemployeeDao {
 	private String DOJ;
 	private String Address;
 	private String names;*/
-	Employee e = new Employee();
+	
+	 Employee e=new Employee();
+	 Department d=new Department();
+	 Project p=new Project();
+	 Role r=new Role();
 
 	String driver = "com.mysql.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/test";
@@ -47,9 +51,9 @@ public class EmployeeDaoImplJDBC implements IemployeeDao {
 		preparedStmt.setString(6, e.getAddress());
 		preparedStmt.setString(7,e.getDob());
 		preparedStmt.setString(8,e.getDoj());
-		preparedStmt.setInt(9,e.getDeptid());
-		preparedStmt.setInt(10,e.getProjId());
-		preparedStmt.setInt(11,e.getRoleId());
+		preparedStmt.setInt(9,d.getDeptid());
+		preparedStmt.setInt(10,p.getProjId());
+		preparedStmt.setInt(11,r.getRoleId());
 		
 		preparedStmt.execute();
 		//Stmt.executeUpdate(query);
@@ -61,25 +65,117 @@ public class EmployeeDaoImplJDBC implements IemployeeDao {
 		 Connection dbConnection;
 		 dbConnection=(Connection)DriverManager.getConnection(url);
 		 java.sql.Statement stmt = dbConnection.createStatement();
-		    java.sql.ResultSet rs = stmt.executeQuery("select * from Employee");
+		    java.sql.ResultSet rs = stmt.executeQuery("select * from Employee inner join Department on Employee.deptid=Department.deptid inner join Role on Employee.roleId=Role.roleId inner join Project on Employee.projId=Project.projId");
+		    
+
+		   
 		    while (rs.next()) 
 		    {
 		    	    	 
 		         System.out.println("empid: "+rs.getString("empid"));
 		         System.out.println("kinid: "+rs.getString("kinid"));
-		         System.out.println("mail: "+rs.getString("phoneId"));
+		         System.out.println("empname: "+rs.getString("empname"));
+		         System.out.println("mail: "+rs.getString("mail"));
+		         System.out.println("phoneNo: "+rs.getString("phoneNo"));
+		         System.out.println("address: "+rs.getString("address"));
 		         System.out.println("dob: "+rs.getString("dob"));
 		         System.out.println("doj: "+rs.getString("doj"));
-		         System.out.println("address: "+rs.getString("address"));
-		         System.out.println("Deptid: "+rs.getString("Deptid"));
-		         System.out.println("projId: "+rs.getString("projId"));
-		         System.out.println("roleId: "+rs.getString("roleId"));	
+		         System.out.println("Deptid: "+rs.getInt("Deptid"));
+		         System.out.println("DeptName: "+rs.getString("deptName"));
+		         System.out.println("projId: "+rs.getInt("projId"));
+		         System.out.println ("projName: "+rs.getString("projName"));
+		         System.out.println("roleId: "+rs.getInt("roleId"));
+		         System.out.println("roleName: "+rs.getString("roleName"));
 		    }
 
 	
 }
 
-	public 
+	@Override
+	public Employee searchEmployee(String kinid, String empName, String mail) throws ClassNotFoundException, SQLException 
+	{
+		 Class.forName(driver);
+		 Connection dbConnection;
+		 dbConnection=(Connection)DriverManager.getConnection(url);
+		 java.sql.Statement stmt = dbConnection.createStatement();
+		
+		 java.sql.ResultSet rs=stmt.executeQuery("select * from Employee inner join Department on Employee.deptid=Department.deptid inner join Role on Employee.roleId=Role.roleId inner join Project on Employee.projId=Project.projId where kinid=? or empname=? or mail=?"); 
+		 ((PreparedStatement) stmt).setString(1, kinid);
+		 ((PreparedStatement) stmt).setString(3, empName);
+		 ((PreparedStatement) stmt).setString(4, mail);
+		if(rs!=null){
+		 e.setEmpid((String)rs.getString("empid"));
+		 e.setKinid((String)rs.getString("kinid"));
+		 e.setEmpname((String)rs.getString("empname"));
+		 e.setMail((String)rs.getString("mail"));
+		 e.setPhoneNo((String)rs.getString("phoneNo"));
+		 e.setAddress((String)rs.getString("address"));
+		 e.setDob((String)rs.getString("dob"));
+		 e.setDoj((String)rs.getString("doj"));
+		 d.setDeptid((int)rs.getInt("Deptid"));
+		 d.setDeptName((String)rs.getString("DeptName"));
+		 p.setProjId((int)rs.getInt("projId"));
+		 p.setProjName((String)rs.getString("projName"));
+		 r.setRoleId((int)rs.getInt("roleId"));
+		 r.setRoleName((String)rs.getString("roleName"));
+		 
+		 return e;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+
+	@Override
+	public Employee modifyEmployee(Map empModifiedDetails, Employee emp, int ch) throws SQLException, ClassNotFoundException {
+		 Class.forName(driver);
+		 Connection dbConnection=null;
+		 dbConnection=(Connection)DriverManager.getConnection(url);
+		 PreparedStatement stmt;
+	
+		
+		switch(ch)
+		{
+		       case 1:emp.setEmpname((String) empModifiedDetails.get("empName"));
+		              stmt=(PreparedStatement) dbConnection.prepareStatement("update Employee set name=? where kinid="+emp.getKinid());
+		              stmt.setString(1,emp.getEmpname());
+		              break;
+		       case 2:emp.setMail((String) empModifiedDetails.get("email"));
+		             stmt=(PreparedStatement) dbConnection.prepareStatement("update Employee set mail=? where kinid="+emp.getKinid());
+		             stmt.setString(1, emp.getMail());
+				     break;
+		       case 3:emp.setPhoneNo((String) empModifiedDetails.get("phoneNo"));
+		              stmt=(PreparedStatement) dbConnection.prepareStatement("update Employee set phoneNo=? where kinid="+emp.getKinid());
+		             stmt.setString(1, emp.getPhoneNo());
+		              break;
+		       case 4:emp.setAddress((String) empModifiedDetails.get("address"));
+		       		stmt=(PreparedStatement) dbConnection.prepareStatement("update Employee set address=? where kinid="+emp.getKinid());
+	                stmt.setString(1, emp.getAddress());
+	        		break;
+		       	case 5:emp.setDob((String) empModifiedDetails.get("dob"));
+		       			stmt=(PreparedStatement) dbConnection.prepareStatement("update Employee set dob=? where kinid="+emp.getKinid());
+		       			stmt.setString(1,emp.getDob());
+						break;
+		       	case 6:emp.setDoj((String) empModifiedDetails.get("doj"));
+		       			stmt=(PreparedStatement) dbConnection.prepareStatement("update Employee set doj=? where kinid="+emp.getKinid());
+		       			stmt.setString(1,emp.getDoj());
+				        break;
+		}
+	
+		return emp;
+		
+	}
+
+	@Override
+	public boolean removeEmployee(String kinid, String empName, String mail) 
+	{
+		
+		return false;
+	}
+
+} 
 	
 
 	
@@ -138,34 +234,6 @@ public class EmployeeDaoImplJDBC implements IemployeeDao {
 
 
 
-	@Override
-	public Employee searchEmployee(String kinid, String empName, String mail) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
-
-
-	@Override
-	public void modifyEmployee(Map empModifiedDetails, Employee emp, int ch) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
-	@Override
-	public boolean removeEmployee(String kinid, String empName, String mail) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-/*	@Override
-	public boolean RemoveEmployee(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
-
-}
